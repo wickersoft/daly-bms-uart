@@ -1,5 +1,9 @@
+# About this Fork
+In the original repo by maland16, the library is built for a Teensy 4.0. This repo is supposed to be functionally identical to the original, but run on boards of the ATmega328Px family (Arduino Uno, Nano, Pro Mini, etc). 
+Because the ATmega328 has only one hardware serial port and this is used for programming and debugging, communication with the BMS is done via SoftwareSerial. Stability tests have not yet been carried out. 
+
 # Overview
-This library uses the Arduino Serial library to communicate with a DALY BMS over UART. It was originally designed for use with the **Teensy 4.0** as a part of [this project](https://github.com/maland16/citicar-charger) and has not officially been tested on official Arduino hardware.  
+This library uses the Arduino Serial library to communicate with a DALY BMS over UART. It was originally designed for use with the **Teensy 4.0** as a part of [this project](https://github.com/maland16/citicar-charger) and has been modified to run on ATmega328Px based hardware.  
 
 ## How to use this library  
 -Download a zip of this library using the green button above  
