@@ -157,6 +157,15 @@ public:
      * @param serialIntf UART interface BMS is connected to
      */
     Daly_BMS_UART(SoftwareSerial &serialIntf);
+    
+    /**
+     * @brief Construct a new Daly_BMS_UART object for RS485
+     *
+     * @param serialIntf UART interface BMS is connected to, 
+     * @param DE_pin is the driver_enable IO pin
+     * @param RE_pin is the receiver_enable IO pin 
+     */
+    Daly_BMS_UART(SoftwareSerial &serialIntf, uint8_t DE_pin, uint8_t RE_pin=0 );
 
     /**
      * @brief Initializes this driver
@@ -282,6 +291,18 @@ private:
      * @details This is set in the constructor
      */
     SoftwareSerial *my_serialIntf;
+
+    /**
+     * @brief DE_pin as set for RS485 communications. Set to 0 for no usage
+     * @details This is set in the constructor
+     */
+    uint8_t my_DE_pin = 0;
+
+    /**
+     * @brief RE_pin as set for RS485 communications. Set to 0 for no usage
+     * @details This is set in the constructor
+     */
+    uint8_t my_RE_pin = 0;
 
     /**
      * @brief Buffer used to transmit data to the BMS
