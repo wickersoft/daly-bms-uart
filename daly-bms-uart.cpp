@@ -8,10 +8,19 @@
 //----------------------------------------------------------------------
 // Public Functions
 //----------------------------------------------------------------------
+Daly_BMS_UART::Daly_BMS_UART(SoftwareSerial &serialIntf, uint8_t DE_pin, uint8_t RE_pin=0 )
+    :Daly_BMS_UART(serialIntf)
+{
+    this->my_DE_pin = DE_pin;
+    this->my_RE_pin = RE_pin;    
+}
+
 
 Daly_BMS_UART::Daly_BMS_UART(SoftwareSerial &serial_peripheral)
 {
     this->my_serialIntf = &serial_peripheral;
+    this->my_DE_pin = 0;
+    this->my_RE_pin = 0;    
 }
 
 bool Daly_BMS_UART::Init()
@@ -43,6 +52,18 @@ bool Daly_BMS_UART::Init()
     for (uint8_t i = 4; i < 12; i++)
     {
         this->my_txBuffer[i] = 0x00;
+    }
+
+    if( this->my_DE_pin != 0)
+    {
+        pinMode(this->my_DE_pin, OUTPUT);
+        digitalWrite(this->my_DE_pin,LOW);	
+    }
+
+    if( this->my_RE_pin != 0)
+    {
+        pinMode(this->my_RE_pin, OUTPUT);
+        digitalWrite(this->my_RE_pin,LOW);
     }
 
     return true;
@@ -533,13 +554,31 @@ void Daly_BMS_UART::sendCommand(COMMAND cmdID)
     this->my_txBuffer[12] = checksum;
 
 #ifdef DEBUG_SERIAL
-    DEBUG_SERIAL.print("<DALY-BMS DEBUG> Send command: 0x");
+    DEBUG_SERIAL.print(F("<DALY-BMS DEBUG> Send command: 0x"));
     DEBUG_SERIAL.print(cmdID, HEX);
-    DEBUG_SERIAL.print(" Checksum = 0x");
+    DEBUG_SERIAL.print(F(" Checksum = 0x"));
     DEBUG_SERIAL.println(checksum, HEX);
 #endif
 
+    if( this->my_RE_pin != 0)
+    {
+        digitalWrite(this->my_RE_pin,HIGH);
+    }
+    if( this->my_DE_pin != 0)
+    {
+        digitalWrite(this->my_DE_pin,HIGH);
+    }
+
     this->my_serialIntf->write(this->my_txBuffer, XFER_BUFFER_LENGTH);
+
+    if( this->my_RE_pin != 0)
+    {
+        digitalWrite(this->my_RE_pin,LOW);
+    }
+    if( this->my_DE_pin != 0)
+    {
+        digitalWrite(this->my_DE_pin,LOW);
+    }
 }
 
 bool Daly_BMS_UART::receiveBytes(void)

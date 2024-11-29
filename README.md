@@ -1,4 +1,8 @@
-# About this Fork
+# About this fork
+As an addition to the fork by https://github.com/wickersoft/daly-bms-uart, this adds support for using the MAX485 chip for RS485 communications. 
+The DE and RE IO pins to allows RS485 comms. If DE and RE are on a single IO pin (as allowed with MAX485) the default RE pin assignment of 0 can be set.
+
+# About /wickersoft/daly-bms-uart Fork
 In the original repo by maland16, the library is built for a Teensy 4.0. This repo is supposed to be functionally identical to the original, but run on boards of the ATmega328Px family (Arduino Uno, Nano, Pro Mini, etc). 
 Because the ATmega328 has only one hardware serial port and this is used for programming and debugging, communication with the BMS is done via SoftwareSerial. Stability tests have not yet been carried out. 
 
