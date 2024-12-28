@@ -28,6 +28,13 @@ public:
         BMS_RESET = 0x00,
     };
 
+    enum CHARGE_DISCHARGE_STATUS
+    {
+        STATIONARY = 0,
+        CHARGE = 1,
+        DISCHARGE = 2,
+    };
+
     /**
      * @brief get struct holds all the data collected from the BMS and is populated using the update() API
      * @details Comments specify precision and units where applicable
@@ -52,7 +59,7 @@ public:
         float tempAverage; // Average of temp sensors
 
         // data from 0x93
-        String chargeDischargeStatus; // charge/discharge status (0 stationary, 1 charge, 2 discharge)
+        CHARGE_DISCHARGE_STATUS chargeDischargeStatus; // charge/discharge status (0 stationary, 1 charge, 2 discharge)
         bool chargeFetState;          // charging MOSFET status
         bool disChargeFetState;       // discharge MOSFET state
         int bmsHeartBeat;             // BMS life (0~255 cycles)?
